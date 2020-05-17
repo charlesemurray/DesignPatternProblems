@@ -12,6 +12,7 @@
 import path
 import json
 
+
 class ParseResourceFile:
 
 	def __init__(self, resource_file):

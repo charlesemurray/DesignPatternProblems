@@ -5,6 +5,255 @@
 # - In Memory Sort
 # - Large Number of Records Sort
 # - Large Size of Records Sort
+#observer pattern
+#Problems:
+# - Making sure only one of the observers runs
+# - Adding a new observer potentially requires changes to others
+# Advantages
+# - Clear view of what sorting methods we have
+# - 
+
+# wrong
+# class CSV:
+# 	def __init__(self, location):
+# 		self.file = open(location, "r")
+# 		self.sorting_methods = [InMemorySorting, LargeNumberRecordsSorting, LargeSizeRecordsSorting]
+# 	def sort(self):
+# 		for sorting_method in self.sorting_methods:
+# 			sorting_method(self.file).sort()
+# class SortingStrategy:
+# 	def __init__(self, file):
+# 		pass
+# 	def sort():
+# 		pass
+# class InMemorySorting(SortingStrategy):
+# 	def sort():
+# 		pass
+# class LargeNumberRecordsSorting(SortingStrategy):
+# 	def sort():
+# 		pass
+# class LargeSizeRecordsSorting(SortingStrategy):
+# 	def sort():
+# 		pass
+
+# Correct Observer Pattern
+class CSV:
+	def __init__(self):
+		self.sorting_methods = []
+
+	def attach(self, sort_method):
+		self.sorting_method.append(sort_method)
+
+	def detach(self, sort_method):
+		self.sorting_method.remove(sort_method)
+
+	def sort(location):
+		for method in self.sorting_method:
+			method.sort(location)
+
+class LargeFile:
+
+class SmallFile:
+
+	def sort():
+		if length < cutoff:
+
+
+class SortingStrategy:
+	def __init__(self, csv):
+		csv.attach(self)
+	def sort(location):
+		pass
+class InMemorySorting(SortingStrategy):
+	def sort(location):
+		pass
+class LargeNumberRecordsSorting(SortingStrategy):
+	def sort(location):
+		pass
+class LargeSizeRecordsSorting(SortingStrategy):
+	def sort(location):
+		pass
+
+class CSVWrapper:
+	def __init__(self):
+		csv = CSV()
+		large = LargeFile(csv)
+		small = SmallFile(csv)
+		InMemory(small)
+		InMemory(csv)
+		LargeNumberRecordSorting(csv)
+		LargeSizeRecordSorting(csv)
+		return csv
+
+def main():
+	csv = CSVWrapper()
+	csv.sort("any file")
+	csv.sort("Another file")
+	csv = CSV()
+	InMemory(csv)
+
+
+# class SortingAgent:
+# 	def __init__(self, file):
+# 		self.file = file
+# 		self.strategy_list = [InMemorySorting, LargeNumberRecordsSorting, LargeSizeRecordsSorting] 
+# 	def get_strategy(self, cutoff_size_file, cutoff_size_record):
+# 		file_size = os.stat(self.file).st_size 
+# 		#calculate size of first few records of csv file
+# 		with self.file as file:
+# 			i = 0
+# 			total_length = 0
+# 			while i < 5:
+# 				total_length += len(file.readline())
+# 				i += 1
+# 		first_5_records_average_length = total_length//5
+# 		if column_size > self.cutoff_size_record:
+# 			strategy = LargeSizeRecordsSorting(self.file).sort
+# 		elif file_size > self.cutoff_size_file:
+# 			strategy = LargeNumberRecordsSorting(self.file).sort
+# 		else:
+# 			strategy = InMemorySorting(self.file).sort
+		
+		
+Client:file_location -> CSV -> LargeSizeRecordSorting
+							-> LargeNumberRecordsSorting
+							-> InMemorySorting
+
+
+
+
+
+#attempted strategy pattern
+import os
+class CSV:
+	def __init__(self, location):
+		#get the handle of the CSV
+		self.file = open(location, "r")
+	def sort(self):
+		#cut off for large size record sorting
+		
+		#get the whole size of csv file
+		file_size = os.stat(self.file).st_size 
+		#calculate size of first few records of csv file
+		with self.file as file:
+			i = 0
+			total_length = 0
+			while i < 5:
+				total_length += len(file.readline())
+				i += 1
+		first_5_records_average_length = total_length//5
+		SortingAgent.sorting(self.file)
+		
+class SortingAgent:
+	def __init__(self, file, cutoff_size_file = default, cutoff_size_record = default):
+		self.file = file
+		self.cutoff_size_record = cutoff_size_file
+		self.cutoff_size_file = cutoff_size_record
+	def sorting(self, file_size, column_size):
+		if column_size > self.cutoff_size_record:
+			LargeSizeRecordsSorting(self.file).sort()
+		elif file_size > self.cutoff_size_file:
+			LargeNumberRecordsSorting(self.file).sort()
+		else:
+			InMemorySorting(self.file).sort()
+
+
+
+
+class SortingStrategy:
+	def __init__(self, file):
+		pass
+	def sort():
+		pass
+class InMemorySorting(SortingStrategy):
+	def sort():
+		pass
+class LargeNumberRecordsSorting(SortingStrategy):
+	def sort():
+		pass
+class LargeSizeRecordsSorting(SortingStrategy):
+	def sort():
+		pass
+
+
+import os
+class CSV:
+	def __init__(self, location, strategy):
+		#get the handle of the CSV
+		self.file = open(location, "r")
+		self.strategy = strategy
+	def sort(self):
+		self.strategy.sort()
+
+		
+class SortingAgent:
+	__instance = None
+
+	def __init__(self):
+		if Singleton.__instance != None:
+			raise "This is a singleton"
+		else:
+			self.cutoff_size_record = 20
+			self.cutoff_size_file = 1000
+			Singleton.__instance = self
+
+	@classmethod
+	def getInstance():
+		if cls.__instance == None:
+			cls()
+		return cls.__instance
+
+	def setLocation(self, location):
+		self.location = location
+
+	def determineStrategy(self, location)
+		#get the whole size of csv file
+		file_size = os.stat(location).st_size 
+		#calculate size of first few records of csv file
+		with open(location, "r") as file:
+			i = 0
+			total_length = 0
+			while i < 5:
+				total_length += len(file.readline())
+				i += 1
+		first_5_records_average_length = total_length//5
+		if column_size > self.cutoff_size_record:
+			strategy = LargeSizeRecordsSorting(self.file)
+		elif file_size > self.cutoff_size_file:
+			strategy = LargeNumberRecordsSorting(self.file)
+		else:
+			strategy = InMemorySorting(self.file)
+		return CSV(location, strategy)
+
+	def getCSV(self, location):
+		self.determineStrategy(location)
+		
+
+def main():
+	filename =
+	csv = SortingAgent.getCSV(filename)
+	csv.setLocation(file_name).sort()
+	csv.sort()
+	csv = SortingAgent.getCSV(another_file)
+	csv.sort()
+
+
+
+
+class SortingStrategy:
+	def __init__(self, file):
+		pass
+	def sort():
+		pass
+class InMemorySorting(SortingStrategy):
+	def sort():
+		pass
+class LargeNumberRecordsSorting(SortingStrategy):
+	def sort():
+		pass
+class LargeSizeRecordsSorting(SortingStrategy):
+	def sort():
+		pass
 
 """
 Sort CSV file by multiple columns, writing output to sorted CSV file.
